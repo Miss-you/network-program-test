@@ -16,7 +16,7 @@
 #define BUFFER_SIZE (4096)
 #define MAX_FILE_NAME_LEN (256)
 
-void tcpServerDownloadFile (int connFd, struct sockaddr_in clientAddr, char *fileServerRoot);
+void tcpServerDownloadFile (int connFd, struct sockaddr_in *clientAddr, char *fileServerRoot);
 
 int main(int argc, char *argv[]) {
     /*char serverIP[IP_SIZE];
@@ -93,6 +93,7 @@ int main(int argc, char *argv[]) {
 
         printf("get connection\n");
         //pull file
+        tcpServerDownloadFile(connFd, &clientAddr, "./");
 
         close(connFd);       
     }
@@ -101,7 +102,7 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-void tcpServerDownloadFile (int connFd, struct sockaddr_in clientAddr, char *fileServerRoot) {
+void tcpServerDownloadFile (int connFd, struct sockaddr_in *clientAddr, char *fileServerRoot) {
     char buffer[BUFFER_SIZE];
     char filename[MAX_FILE_NAME_LEN];
     char fileServerPath[MAX_FILE_NAME_LEN];
