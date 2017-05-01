@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
     bzero(&serverAddr, sizeof(serverAddr));
 
     /* create sock */
-    sockFd = socket(AF_INET, SOCK_STREAM, 0)；
+    sockFd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockFd < 0) {
         perror("sock init failed!\n");
         exit(-1);
@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
     }
 
     //listen
-    if(listen(sockFd, LISTEN_QUEUE)) {
+    if(listen(sockFd, 5)) {
         printf("server listen failed, err is %d\n", errno);
         exit(-1);
     } else {
@@ -79,12 +79,12 @@ int main(int argc, char *argv[]) {
     }
 
     struct sockaddr_in clientAddr;
-    socklen_t          length = sizeof(sockaddr_in);
+    socklen_t          length = sizeof(clientAddr);
     int                connFd = 0;
 
     while (1) {
         //accept
-        connFd = accept(sockFd, (struct sockaddr *)clientAddr, &length);
+        connFd = accept(sockFd, (struct sockaddr *)&clientAddr, &length);
 
         if (connFd == -1) {
             printf("accpet err\n");
@@ -110,7 +110,6 @@ void tcpServerDownloadFile (int connFd, struct sockaddr_in clientAddr, char *fil
     int count = 0;
     int dataLen = 0;
     int writeLen = 0;
-    int flag = 0;
 
     bzero(buffer, BUFFER_SIZE);
 
@@ -140,7 +139,7 @@ void tcpServerDownloadFile (int connFd, struct sockaddr_in clientAddr, char *fil
         //if (dataLen)
         writeLen = fwrite(buffer, sizeof(char), dataLen, stream);
         if (writeLen != dataLen) {
-            printf("write error, upload interupt\n")
+            printf("write error, upload interupt\n");
             exit(-1);
         }
 
