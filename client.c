@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
     printf("connect server success\n");
 
     //push file
-    tcpClientUploadFile(sockFd, &serverAddr, "./test.go")
+    tcpClientUploadFile(sockFd, &serverAddr, "./test.go");
 
     close(sockFd);
 
